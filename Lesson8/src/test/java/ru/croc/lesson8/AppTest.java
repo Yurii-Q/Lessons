@@ -87,6 +87,9 @@ public class AppTest {
         //Записываем в БД информацию о рейсах
         fs.write(flights);
 
+        //Считываем из БД информацию о рейсах
+        System.out.println(fs.findAll());
+
 
     }
 }

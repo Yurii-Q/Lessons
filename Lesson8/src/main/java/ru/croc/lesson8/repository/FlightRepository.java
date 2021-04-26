@@ -1,6 +1,7 @@
 package ru.croc.lesson8.repository;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
+import ru.croc.lesson8.model.FlightGeneral;
 import ru.croc.lesson8.model.FlightIn;
 import ru.croc.lesson8.model.FlightOut;
 import ru.croc.lesson8.model.Flights;
@@ -17,14 +18,18 @@ public class FlightRepository {
     /**Название таблицы*/
     private static final String NAME_TABLE = "flights";
 
+    /**Генератор уникальных значений*/
+    private int counter = 0;
+
+    /**Запрос на создание таблицы*/
     private static final String QUERY = "CREATE TABLE " + NAME_TABLE +
                                         " (" +
-                                        "id INTEGER PRIMARY KEY, " +
-                                        "id_flight VARCHAR(255) " +
-                                        "company VARCHAR(255) " +
-                                        "place_purpose VARCHAR(255) " +
-                                        "place_departure VARCHAR(255) " +
-                                        "date VARCHAR(255) " +
+                                        "id int NOT NULL PRIMARY KEY, " +
+                                        "id_number VARCHAR(255), " +
+                                        "company VARCHAR(255), " +
+                                        "place_purpose VARCHAR(255), " +
+                                        "place_departure VARCHAR(255), " +
+                                        "date VARCHAR(255), " +
                                         "time VARCHAR(255)" +
                                         ")";
 
@@ -40,7 +45,7 @@ public class FlightRepository {
     }
 
     /**
-     * Инициализация БД
+     * Инициализация БД.
      */
     private void initTable() {
         System.out.println(String.format("Start initializing %s table", NAME_TABLE));
@@ -67,28 +72,33 @@ public class FlightRepository {
         }
     }
 
-//    /**
-//     * Метод поиска всех задач в БД.
-//     *
-//     * @return список всех созданных задач
-//     */
-//    public List<Task> findAll() {
-//        try (Connection connection = dataSource.getConnection();
-//             Statement statement = connection.createStatement()) {
-//            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + NAME_TABLE);
-//            List<Task> taskList = new ArrayList<>();
-//            while (resultSet.next()) {
-//                taskList.add(
-//                        new Task(
-//                                resultSet.getInt("id"),
-//                                resultSet.getString("title")));
-//            }
-//            return taskList;
-//        } catch (Exception e) {
-//            System.out.println("Ошибка выполнения запроса: " + e.getMessage());
-//        }
-//        return new ArrayList<>();
-//    }
+    /**
+     * Метод поиска всех рейсов в БД.
+     *
+     * @return список всех созданных задач
+     */
+    public List<FlightGeneral> findAll() {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + NAME_TABLE);
+            List<FlightGeneral> taskList = new ArrayList<>();
+            while (resultSet.next()) {
+                taskList.add(
+                        new FlightGeneral(
+                                resultSet.getString("company"),
+                                resultSet.getString("place_departure"),
+                                resultSet.getString("place_purpose"),
+                                resultSet.getString("date"),
+                                resultSet.getString("time"),
+                                resultSet.getString("id_number")
+                                ));
+            }
+            return taskList;
+        } catch (Exception e) {
+            System.out.println("Ошибка выполнения запроса: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
 
     /**
      * Метод создания записи в БД о входящем рейсе.
@@ -96,15 +106,16 @@ public class FlightRepository {
      * @param flightIn задача
      */
     public void createNew(FlightIn flightIn) {
-        String sqlQuery = "INSERT INTO " + NAME_TABLE + " VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO " + NAME_TABLE + " VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-            statement.setString(1, flightIn.getId());
-            statement.setString(2, flightIn.getCompany());
-            statement.setString(3, flightIn.getPlacePurpose());
-            statement.setString(4, flightIn.getPlaceDeparture());
-            statement.setString(5, flightIn.getDate());
-            statement.setString(6, flightIn.getTime());
+            statement.setInt(1,++counter);
+            statement.setString(2, flightIn.getId());
+            statement.setString(3, flightIn.getCompany());
+            statement.setString(4, flightIn.getPlacePurpose());
+            statement.setString(5, flightIn.getPlaceDeparture());
+            statement.setString(6, flightIn.getDate());
+            statement.setString(7, flightIn.getTime());
             statement.execute();
         } catch (Exception e) {
             System.out.println("Ошибка выполнения запроса: " + e.getMessage());
@@ -117,21 +128,19 @@ public class FlightRepository {
      * @param flightOut задача
      */
     public void createNew(FlightOut flightOut) {
-        String sqlQuery = "INSERT INTO " + NAME_TABLE + " VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO " + NAME_TABLE + " VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-            statement.setString(1, flightOut.getId());
-            statement.setString(2, flightOut.getCompany());
-            statement.setString(3, flightOut.getPlacePurpose());
-            statement.setString(4, flightOut.getPlaceDeparture());
-            statement.setString(5, flightOut.getDate());
-            statement.setString(6, flightOut.getTime());
+            statement.setInt(1,++counter);
+            statement.setString(2, flightOut.getId());
+            statement.setString(3, flightOut.getCompany());
+            statement.setString(4, flightOut.getPlacePurpose());
+            statement.setString(5, flightOut.getPlaceDeparture());
+            statement.setString(6, flightOut.getDate());
+            statement.setString(7, flightOut.getTime());
             statement.execute();
         } catch (Exception e) {
             System.out.println("Ошибка выполнения запроса: " + e.getMessage());
         }
     }
-
-
-
 }
