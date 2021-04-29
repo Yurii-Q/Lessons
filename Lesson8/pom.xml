@@ -5,14 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.croc</groupId>
-    <artifactId>Lesson7</artifactId>
+    <artifactId>Lesson8</artifactId>
     <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <maven.version>3.8.0</maven.version>
         <junit.version>5.5.2</junit.version>
         <derby.version>10.13.1.1</derby.version>
+        <jackson.dataformat.version>2.9.10</jackson.dataformat.version>
+        <jackson.module.version>2.9.10</jackson.module.version>
+        <jakarta.xml.bind.version>2.3.3</jakarta.xml.bind.version>
     </properties>
 
     <build>
@@ -20,7 +24,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${maven.version}</version>
                 <configuration>
                     <target>${maven.compiler.target}</target>
                     <source>${maven.compiler.source}</source>
@@ -46,17 +50,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.9.10</version>
+            <version>${jackson.dataformat.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
-            <version>2.9.10</version>
+            <version>${jackson.module.version}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>2.3.3</version>
+            <version>${jakarta.xml.bind.version}</version>
         </dependency>
     </dependencies>
 

@@ -10,29 +10,41 @@ import java.util.Objects;
 @XmlRootElement
 public class FlightGeneral {
 
-    /**Номер рейса*/
+    /**
+     * Номер рейса
+     */
     @XmlElement
-    private String id;
+    protected String id;
 
-    /**Компания*/
+    /**
+     * Компания
+     */
     @XmlElement
-    private String company;
+    protected String company;
 
-    /**Место назначения*/
+    /**
+     * Место назначения
+     */
     @XmlElement
-    private String placePurpose;
+    protected String placePurpose;
 
-    /**Место вылета*/
+    /**
+     * Место вылета
+     */
     @XmlElement
-    private String placeDeparture;
+    protected String placeDeparture;
 
-    /**Дата вылета*/
+    /**
+     * Дата вылета
+     */
     @XmlElement
-    private String date;
+    protected String date;
 
-    /**Время вылета*/
+    /**
+     * Время вылета
+     */
     @XmlElement
-    private String time;
+    protected String time;
 
 
     /**

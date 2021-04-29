@@ -13,7 +13,9 @@ import java.util.List;
  */
 public class FlightService {
 
-    //Подключаем Repository модуль
+    /**
+     * Подключаем Repository модуль
+     */
     FlightRepository fr;
 
     /**
@@ -28,7 +30,7 @@ public class FlightService {
      * Метод для записи в БД.
      * @param flights
      */
-    public void write(Flights flights){
+    public void createNew(Flights flights){
 
         //Записываем исходящие рейсы
         for(FlightOut i: flights.getFlightOuts()){
@@ -39,7 +41,6 @@ public class FlightService {
         for(FlightIn i: flights.getFlightIns()){
             fr.createNew(i);
         }
-
     }
 
     /**
@@ -48,6 +49,20 @@ public class FlightService {
      */
     public List<FlightGeneral> findAll (){
         return fr.findAll();
+    }
 
+    /**
+     * Удалить рейс.
+     * @param flight
+     */
+    public void deleteRecord(FlightGeneral flight){
+        fr.delete(flight);
+    }
+
+    /**
+     * Удалить все записи о рейсах.
+     */
+    public void deleteAll(){
+        fr.deleteAll();
     }
 }

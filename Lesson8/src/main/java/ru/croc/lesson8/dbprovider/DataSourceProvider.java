@@ -12,7 +12,9 @@ import java.util.Properties;
  */
 public class DataSourceProvider {
 
-    /**База данных*/
+    /**
+     * База данных
+     */
     private EmbeddedDataSource dataSource;
 
     /**

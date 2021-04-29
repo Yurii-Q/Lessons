@@ -13,7 +13,9 @@ import java.util.Objects;
 @XmlRootElement
 public class FlightInsList {
 
-    /**Список исходящих рейсов*/
+    /**
+     * Список исходящих рейсов
+     */
     @XmlElementWrapper(name = "flightIns")
     @XmlElement(name = "flightIn")
     private List<FlightIn> flightIns = new ArrayList<>();

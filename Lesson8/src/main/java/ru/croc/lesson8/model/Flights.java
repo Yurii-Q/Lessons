@@ -9,10 +9,14 @@ import java.util.Objects;
  */
 public class Flights {
 
-    /**Список исходящих рейсов*/
+    /**
+     * Список исходящих рейсов
+     */
     private List<FlightOut> flightOuts = new ArrayList<>();
 
-    /**Список входящих рейсов*/
+    /**
+     * Список входящих рейсов
+     */
     private List<FlightIn> flightIns = new ArrayList<>();
 
     /**

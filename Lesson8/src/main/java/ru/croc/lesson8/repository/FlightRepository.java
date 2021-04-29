@@ -15,13 +15,19 @@ import java.util.List;
  */
 public class FlightRepository {
 
-    /**Название таблицы*/
+    /**
+     * Название таблицы
+     */
     private static final String NAME_TABLE = "flights";
 
-    /**Генератор уникальных значений*/
+    /**
+     * Генератор уникальных значений
+     */
     private int counter = 0;
 
-    /**Запрос на создание таблицы*/
+    /**
+     * Запрос на создание таблицы
+     */
     private static final String QUERY = "CREATE TABLE " + NAME_TABLE +
                                         " (" +
                                         "id int NOT NULL PRIMARY KEY, " +
@@ -33,7 +39,9 @@ public class FlightRepository {
                                         "time VARCHAR(255)" +
                                         ")";
 
-    /**База данных*/
+    /**
+     * База данных
+     */
     private EmbeddedDataSource dataSource;
 
     /**
@@ -103,19 +111,19 @@ public class FlightRepository {
     /**
      * Метод создания записи в БД о входящем рейсе.
      *
-     * @param flightIn задача
+     * @param flight задача
      */
-    public void createNew(FlightIn flightIn) {
+    public void createNew(FlightGeneral flight) {
         String sqlQuery = "INSERT INTO " + NAME_TABLE + " VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
             statement.setInt(1,++counter);
-            statement.setString(2, flightIn.getId());
-            statement.setString(3, flightIn.getCompany());
-            statement.setString(4, flightIn.getPlacePurpose());
-            statement.setString(5, flightIn.getPlaceDeparture());
-            statement.setString(6, flightIn.getDate());
-            statement.setString(7, flightIn.getTime());
+            statement.setString(2, flight.getId());
+            statement.setString(3, flight.getCompany());
+            statement.setString(4, flight.getPlacePurpose());
+            statement.setString(5, flight.getPlaceDeparture());
+            statement.setString(6, flight.getDate());
+            statement.setString(7, flight.getTime());
             statement.execute();
         } catch (Exception e) {
             System.out.println("Ошибка выполнения запроса: " + e.getMessage());
@@ -123,21 +131,27 @@ public class FlightRepository {
     }
 
     /**
-     * Метод создания записи в БД о исходящем рейсе.
+     * Метод удаления записи в БД о входящем рейсе (по номеру рейса).
      *
-     * @param flightOut задача
+     * @param flight задача
      */
-    public void createNew(FlightOut flightOut) {
-        String sqlQuery = "INSERT INTO " + NAME_TABLE + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void delete(FlightGeneral flight) {
+        String sqlQuery = "DELETE FROM " + NAME_TABLE + " WHERE id_number=" + flight.getId();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-            statement.setInt(1,++counter);
-            statement.setString(2, flightOut.getId());
-            statement.setString(3, flightOut.getCompany());
-            statement.setString(4, flightOut.getPlacePurpose());
-            statement.setString(5, flightOut.getPlaceDeparture());
-            statement.setString(6, flightOut.getDate());
-            statement.setString(7, flightOut.getTime());
+            statement.execute();
+        } catch (Exception e) {
+            System.out.println("Ошибка выполнения запроса: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Удалить все записи.
+     */
+    public void deleteAll() {
+        String sqlQuery = "DELETE FROM " + NAME_TABLE;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
             statement.execute();
         } catch (Exception e) {
             System.out.println("Ошибка выполнения запроса: " + e.getMessage());

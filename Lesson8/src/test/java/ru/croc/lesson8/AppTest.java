@@ -25,9 +25,9 @@ public class AppTest {
         Flights flights = new Flights();
 
         //Созадем исходящие рейсы
-        FlightOut flightOut1 = new FlightOut("Com","Moscow","Kras","18.04.2021","12:25","fhf89h");
-        FlightOut flightOut2 = new FlightOut("Com","Novgorod","Kras","19.04.2021","18:35","fhgg89h");
-        FlightOut flightOut3 = new FlightOut("Com","Magadan","Kras","12.04.2021","13:46","fhhtf89h");
+        FlightOut flightOut1 = new FlightOut("Com","Moscow","Kras","18.04.2021","12:25","a1");
+        FlightOut flightOut2 = new FlightOut("Com","Novgorod","Kras","19.04.2021","18:35","a2");
+        FlightOut flightOut3 = new FlightOut("Com","Magadan","Kras","12.04.2021","13:46","a3");
 
         //Создаем список исходящих рейсов
         FlightOutsList flightOutsList = new FlightOutsList();
@@ -36,9 +36,9 @@ public class AppTest {
         flightOutsList.addFlight(flightOut3);
 
         //Создаем входящие рейсы
-        FlightIn flightIn1 = new FlightIn("Com","Moscow","Giorgia","18.04.2021","12:25","fhf89h");
-        FlightIn flightIn2 = new FlightIn("Com","Moscow","Grot","18.04.2021","12:25","fhf89h");
-        FlightIn flightIn3 = new FlightIn("Com","Moscow","Berlin","18.04.2021","12:25","fhf89h");
+        FlightIn flightIn1 = new FlightIn("Com","Moscow","Giorgia","18.04.2021","12:25","b1");
+        FlightIn flightIn2 = new FlightIn("Com","Moscow","Grot","18.04.2021","12:25","b2");
+        FlightIn flightIn3 = new FlightIn("Com","Moscow","Berlin","18.04.2021","12:25","b3");
 
         //Создаем список входящих рейсов
         FlightInsList flightInsList = new FlightInsList();
@@ -74,7 +74,6 @@ public class AppTest {
 
         System.out.println(flights);
 
-
         // Создаем драйвер для подключения к БД
         DataSourceProvider driver = new DataSourceProvider();
 
@@ -85,11 +84,13 @@ public class AppTest {
         FlightService fs = new FlightService(database);
 
         //Записываем в БД информацию о рейсах
-        fs.write(flights);
+        fs.createNew(flights);
+
+        //Удаляем запись
+        fs.deleteRecord(flightIn1);
 
         //Считываем из БД информацию о рейсах
         System.out.println(fs.findAll());
-
 
     }
 }
